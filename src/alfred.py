@@ -15,13 +15,13 @@ python3 yourscript.py "{query}" arg2 arg3 ...
 """
 
 
-UNESCAPE_CHARACTERS = u""" ;()"""
+UNESCAPE_CHARACTERS = """ ;()"""
 
 _MAX_RESULTS_DEFAULT = 9
 
-with open('info.plist', 'rb') as f:
+with open("info.plist", "rb") as f:
     preferences = plistlib.load(f)
-bundleid = preferences['bundleid']
+bundleid = preferences["bundleid"]
 
 
 class Item(object):
@@ -41,11 +41,11 @@ class Item(object):
         self.icon = icon
 
     def __str__(self):
-        return tostring(self.xml(), encoding='utf-8')
+        return tostring(self.xml(), encoding="utf-8")
 
     def xml(self):
-        item = Element(u'item', self.unicode(self.attributes))
-        for attribute in (u'title', u'subtitle', u'icon'):
+        item = Element("item", self.unicode(self.attributes))
+        for attribute in ("title", "subtitle", "icon"):
             value = getattr(self, attribute)
             if value is None:
                 continue
@@ -63,22 +63,22 @@ def args(characters=None):
 
 
 def config():
-    return _create('config')
+    return _create("config")
 
 
 def decode(s):
-    return unicodedata.normalize('NFC', s.encode("utf-8").decode('utf-8'))
+    return unicodedata.normalize("NFC", s.encode("utf-8").decode("utf-8"))
 
 
 def get_uid(uid):
-    return u'-'.join(map(str, (bundleid, uid)))
+    return "-".join(map(str, (bundleid, uid)))
 
 
 def unescape(query, characters=None):
     if not characters:
         characters = UNESCAPE_CHARACTERS
     for character in characters:
-        query = query.replace('\\%s' % character, character)
+        query = query.replace("\\%s" % character, character)
     return query
 
 
@@ -87,30 +87,30 @@ def write(text):
 
 
 def xml(items, maxresults=_MAX_RESULTS_DEFAULT):
-    root = Element('items')
+    root = Element("items")
     for item in itertools.islice(items, maxresults):
         root.append(item.xml())
-    return tostring(root, encoding='utf-8')
+    return tostring(root, encoding="utf-8")
 
 
 def _create(path):
     if not os.path.isdir(path):
         os.mkdir(path)
     if not os.access(path, os.W_OK):
-        raise IOError('No write access: %s' % path)
+        raise IOError("No write access: %s" % path)
     return path
 
 
 def work(volatile):
     path = {
-        True: '~/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data',
-        False: '~/Library/Application Support/Alfred 2/Workflow Data'
+        True: "~/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data",
+        False: "~/Library/Application Support/Alfred 2/Workflow Data",
     }[bool(volatile)]
     return _create(os.path.join(os.path.expanduser(path), bundleid))
 
 
 def config_set(key, value, volatile=True):
-    filepath = os.path.join(work(volatile), 'config.plist')
+    filepath = os.path.join(work(volatile), "config.plist")
     try:
         conf = plistlib.readPlist(filepath)
     except IOError:
@@ -120,7 +120,7 @@ def config_set(key, value, volatile=True):
 
 
 def config_get(key, default=None, volatile=True):
-    filepath = os.path.join(work(volatile), 'config.plist')
+    filepath = os.path.join(work(volatile), "config.plist")
     try:
         conf = plistlib.readPlist(filepath)
     except IOError:
@@ -143,38 +143,32 @@ class AlfredWorkflow(object):
         return write(xml(items, maxresults=self.max_results))
 
     def message_item(self, title, message, icon=None, uid=0):
-        return Item({
-            u'uid': get_uid(uid),
-            u'arg': '',
-            u'ignore': 'yes'
-        }, title, message, icon)
+        return Item(
+            {"uid": get_uid(uid), "arg": "", "ignore": "yes"}, title, message, icon
+        )
 
     def warning_item(self, title, message, uid=0):
-        return self.message_item(title=title, message=message, uid=uid,
-                                 icon='warning.png')
+        return self.message_item(title=title, message=message, uid=uid, icon="icon.png")
 
     def error_item(self, title, message, uid=0):
-        return self.message_item(title=title, message=message, uid=uid,
-                                 icon='error.png')
+        return self.message_item(title=title, message=message, uid=uid, icon="icon.png")
 
     def exception_item(self, title, exception, uid=0):
-        message = str(exception).replace('\n', ' ')
+        message = str(exception).replace("\n", " ")
         return self.error_item(title=title, message=message, uid=uid)
 
     def route_action(self, action, query=None):
-        method_name = 'do_{}'.format(action)
+        method_name = "do_{}".format(action)
         if not hasattr(self, method_name):
-            raise RuntimeError('Unknown action {}'.format(action))
+            raise RuntimeError("Unknown action {}".format(action))
 
         method = getattr(self, method_name)
         return method(query)
 
     def is_command(self, query):
         try:
-            command, rest = query.split(' ', 1)
+            command, rest = query.split(" ", 1)
         except ValueError:
             command = query
             command = command.strip()
-        return command in self._reserved_words or \
-            hasattr(self, 'do_{}'.format(command))
-
+        return command in self._reserved_words or hasattr(self, "do_{}".format(command))

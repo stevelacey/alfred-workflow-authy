@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>bundleid</key>
-  <string>com.alfredapp.moul.gauth</string>
+  <string>com.alfredapp.stevelacey.authy</string>
   <key>connections</key>
   <dict>
     <key>3859F17F-F608-473F-B690-DDAB90827E02</key>
@@ -126,20 +126,20 @@
     </array>
   </dict>
   <key>createdby</key>
-  <string>Manfred Touron</string>
+  <string>Steve Lacey</string>
   <key>description</key>
-  <string>Google Authenticator Workflow</string>
+  <string>Authy Workflow</string>
   <key>disabled</key>
   <false/>
   <key>name</key>
-  <string>Google Authenticator</string>
+  <string>Authy</string>
   <key>objects</key>
   <array>
     <dict>
       <key>config</key>
       <dict>
         <key>autopaste</key>
-        <true/>
+        <false/>
         <key>clipboardtext</key>
         <string>{query}</string>
         <key>ignoredynamicplaceholders</key>
@@ -189,7 +189,7 @@
         <key>text</key>
         <string>Verification code ({query}) has been written at the Cursor</string>
         <key>title</key>
-        <string>Google Authenticator</string>
+        <string>Authy</string>
       </dict>
       <key>type</key>
       <string>alfred.workflow.output.notification</string>
@@ -210,7 +210,7 @@
         <key>text</key>
         <string>Verification code ({query}) has been copied to the clipboard</string>
         <key>title</key>
-        <string>Google Authenticator</string>
+        <string>Authy</string>
       </dict>
       <key>type</key>
       <string>alfred.workflow.output.notification</string>
@@ -259,7 +259,7 @@
         <key>escaping</key>
         <integer>63</integer>
         <key>keyword</key>
-        <string>gauth</string>
+        <string>a</string>
         <key>queuedelaycustom</key>
         <integer>1</integer>
         <key>queuedelayimmediatelyinitially</key>
@@ -279,7 +279,7 @@
         <key>subtext</key>
         <string>Account</string>
         <key>title</key>
-        <string>Google Authenticator</string>
+        <string>Authy</string>
         <key>type</key>
         <integer>0</integer>
         <key>withspace</key>
@@ -317,9 +317,9 @@
         <key>argumenttype</key>
         <integer>0</integer>
         <key>keyword</key>
-        <string>gauth add</string>
+        <string>a add</string>
         <key>subtext</key>
-        <string>Account name, secret</string>
+        <string>Name secret</string>
         <key>text</key>
         <string>Add a new secret</string>
         <key>withspace</key>
@@ -419,7 +419,7 @@
         <key>text</key>
         <string>{query}</string>
         <key>title</key>
-        <string>Google Authenticator</string>
+        <string>Authy</string>
       </dict>
       <key>type</key>
       <string>alfred.workflow.output.notification</string>
@@ -432,28 +432,27 @@
   <key>readme</key>
   <string>Description
 ———————————
-Equivalent of the mobile versions of Google Authenticator: https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8.
-
+An Alfred workflow for Authy that generates TOTP and copies them to the clipboard.
+ 
 System Modifications
 ————————————————————
-Create a ~/.gauth file with your secrets, ie:
-[google - bob@gmail.com]
+Create a ~/.authy file with your secrets:
+
+[Google]
 secret = xxxxxxxxxxxxxxxxxx
 
-[evernote - robert]
+[Evernote]
 secret = yyyyyyyyyyyyyyyyyy
-Source Code: Github
-https://github.com/m...-workflow-gauth
-
+ 
 Links
 —————
-- Packal: http://www.packal.org/workflow/gauth-google-authenticator
-- Direct Download: https://github.com/packal/repository/raw/master/com.alfredapp.moul.gauth/google_authenticator.alfredworkflow
-- Official Forum Post: http://www.alfredforum.com/topic/4062-gauth-google-authenticator-time-based-two-factor-authentication/
-- Github: https://github.com/moul/alfred-workflow-gauth/
-
+- GitHub: https://github.com/stevelacey/alfred-workflow-authy
+ 
 Acknowledgments
 ——————————————-
+- Forked from Alfred Workflow: Google Authenticator
+  - Manfred Touron
+  - Licensed under MIT
 - Original alarm clock icon
   - Alex Auda Samora from The Noun Project
   - Licensed under Creative Commons Attribution
@@ -554,8 +553,8 @@ Acknowledgments
   <key>variablesdontexport</key>
   <array/>
   <key>version</key>
-  <string></string>
+  <string>1.0.0</string>
   <key>webaddress</key>
-  <string>https://github.com/moul/alfred-workflow-gauth</string>
+  <string>https://github.com/stevelacey/alfred-workflow-authy</string>
 </dict>
 </plist>
