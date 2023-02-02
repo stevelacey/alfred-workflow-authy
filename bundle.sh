@@ -4,9 +4,9 @@
 # To install it, pass the argument "-i" or "--install", e.g.
 # bundle.sh --install
 
-echo "Creating Google Authenticator workflow file..."
+echo "Creating Authy workflow file..."
 
-WORKFLOW_FILE=Google\ Authenticator.alfredworkflow
+WORKFLOW_FILE=Authy.alfredworkflow
 if [ -f "$WORKFLOW_FILE" ]; then
     echo "Removing previous workflow..."
     rm "$WORKFLOW_FILE"
